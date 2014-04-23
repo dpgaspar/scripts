@@ -22,7 +22,7 @@ class GoogleTranslator():
 
     url = "http://translate.google.pt/translate_a/t?client=t&sl=%s&tl=%s&hl=pt-BR&sc=2&ie=UTF-8&oe=UTF-8&prev=btn&rom=1&ssel=0&tsel=0&q=%s"
 
-    def __init__(self, babelfilepath):
+    def __init__(self, babelfilepath, to_lang):
         self.babelfilepath = babelfilepath
         self.babelitems = []
 
@@ -70,6 +70,6 @@ class GoogleTranslator():
             print item
 
 
-b = GoogleTranslator(sys.argv[1])
+b = GoogleTranslator(sys.argv[1], sys.argv[2])
 b.loadfile()
 b.translate("Hello")
