@@ -2,6 +2,7 @@ __author__ = 'dpgaspar'
 import sys
 import re
 import requests
+import urllib
 import mechanize
 import ast
 
