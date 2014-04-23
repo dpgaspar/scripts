@@ -28,18 +28,15 @@ class GoogleTranslator():
     def loadfile(self):
         f = open(self.babelfilepath)
         for line in f:
-            line = line.rstrip()
             m = re.search('msgid "(.*)"', line)
             if m:
                 msgid = m.group(1)
                 for line in f:
-                    line = line.rstrip()
                     m = re.search('msgstr "(.*)"', line)
                     if m:
                         msgstr = m.group(1)
                         if msgstr == "":
                             for line in f:
-                                line = line.rstrip()
                                 if line == "\n": break
                         print "msgid: %s" % (msgid)
                         print "msgstr: %s" % (self._translate(msgid))
@@ -47,7 +44,7 @@ class GoogleTranslator():
                     else:
                         msgid += line
             else:
-                print line
+                print line.rstrip('\n')
 
     def _translate(self, text, from_lang="en", to_lang="fr"):
         return "bon jour"
