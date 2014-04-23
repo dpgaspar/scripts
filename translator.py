@@ -41,10 +41,11 @@ class GoogleTranslator():
                             for line in f:
                                 if line == "\n": break
                         print 'msgid "%s"' % (msgid)
-                        print 'msgstr "%s"' % (self.translate(msgid))
+                        print 'msgstr "%s"' % (msgstr)
                         break
                     else:
                         msgid += line
+                    msgstr += self.translate(line)
             else:
                 print line.rstrip('\n')
 
