@@ -40,7 +40,7 @@ class GoogleTranslator():
                             for line in f:
                                 if line == "\n": break
                         print "msgid: %s" % (msgid)
-                        print "msgstr: %s" % (self._translate(msgid))
+                        print "msgstr: %s" % (self.translate(msgid))
                         break
                     else:
                         msgid += line
@@ -56,7 +56,7 @@ class GoogleTranslator():
         browser.addheaders = [('User-agent', 'chrome')]
         text = browser.open(self.url % (from_lang,to_lang,text)).read().decode('UTF-8')
         m = re.search('^\[\[\["(.*?)",.*',text)
-        print m.group(1)
+        return m.group(1)
 
 
 
