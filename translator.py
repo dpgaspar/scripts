@@ -3,6 +3,7 @@ import sys
 import re
 import requests
 import mechanize
+import json
 
 class BabelItem():
     msgid = ""
@@ -54,8 +55,8 @@ class GoogleTranslator():
         browser.set_handle_robots(False)
         browser.addheaders = [('User-agent', 'chrome')]
         text = browser.open(self.url % (from_lang,to_lang,text)).read().decode('UTF-8')
-        m = re.match('\[\[\["(.*[\"+0])".*\]', text)
-        print m.group(1)
+        data = json.loads(text)
+        print data
 
 
 
@@ -66,4 +67,4 @@ class GoogleTranslator():
 
 b = GoogleTranslator(sys.argv[1])
 b.loadfile()
-#b.translate("Hello")
+b.translate("Hello")
