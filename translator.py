@@ -56,7 +56,7 @@ class GoogleTranslator():
         browser.addheaders = [('User-agent', 'chrome')]
         text = browser.open(self.url % (from_lang,to_lang,text)).read().decode('UTF-8')
         data = x = ast.literal_eval(text)
-        print data
+        print data[0][0][0]
 
 
 
