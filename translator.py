@@ -56,7 +56,7 @@ class GoogleTranslator():
         browser.set_handle_robots(False)
         browser.addheaders = [('User-agent', 'chrome')]
         text = browser.open(self.url % (from_lang,to_lang,urllib.quote(text))).read().decode('UTF-8')
-        m = re.search('^\[\[\["(.*?\"*?)",.*',text)
+        m = re.search('^\[\[\["(.*?)",.*',text)
         return m.group(1)
 
 
