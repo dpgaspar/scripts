@@ -6,17 +6,6 @@ import urllib
 import mechanize
 import ast
 
-class BabelItem():
-    msgid = ""
-    msgstr = ""
-
-    def __init__(self, msgid, msgstr):
-        self.msgid = msgid
-        self.msgstr = msgstr
-
-    def __repr__(self):
-        return "msgid: %s msgstr: %s" % (self.msgid, self.msgstr)
-
 
 class GoogleTranslator():
 
@@ -24,10 +13,10 @@ class GoogleTranslator():
 
     def __init__(self, babelfilepath, to_lang):
         self.babelfilepath = babelfilepath
-        self.babelitems = []
+        self.to_lang = to_lang
+        
 
-
-    def loadfile(self):
+    def process(self):
         f = open(self.babelfilepath)
         for line in f:
             m = re.search('msgid "(.*)"', line)
@@ -54,12 +43,12 @@ class GoogleTranslator():
     def _translate(self, text, from_lang="en", to_lang="fr"):
         return "bon jour"
 
-    def translate(self, text, from_lang="en", to_lang="fr"):
+    def translate(self, text, from_lang="en"):
         browser = mechanize.Browser()
         browser.set_handle_robots(False)
         browser.addheaders = [('User-agent', 'chrome')]
         text = text.replace('"','')
-        text = browser.open(self.url % (from_lang,to_lang,urllib.quote(text))).read().decode('UTF-8')
+        text = browser.open(self.url % (from_lang,self.to_lang,urllib.quote(text))).read().decode('UTF-8')
         m = re.search('^\[\[\["(.*?)",.*',text)
         return m.group(1)
 
@@ -71,5 +60,4 @@ class GoogleTranslator():
 
 
 b = GoogleTranslator(sys.argv[1], sys.argv[2])
-b.loadfile()
-b.translate("Hello")
+b.process()
