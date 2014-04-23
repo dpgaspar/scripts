@@ -58,7 +58,7 @@ class GoogleTranslator():
         browser = mechanize.Browser()
         browser.set_handle_robots(False)
         browser.addheaders = [('User-agent', 'chrome')]
-        text = text.replace("\"","")
+        text = text.replace('"','')
         text = browser.open(self.url % (from_lang,to_lang,urllib.quote(text))).read().decode('UTF-8')
         m = re.search('^\[\[\["(.*?)",.*',text)
         return m.group(1)
