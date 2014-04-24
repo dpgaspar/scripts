@@ -16,14 +16,23 @@ class GoogleTranslator():
         self.to_lang = to_lang
         
 
+    def process2(self):
+        f = open(self.babelfilepath)
+        for line in f:
+            allfile += line
+
+        m = re.search('msgid "(.*?)"\n*msgstr "(.*?)"', line)
+        if m:
+
+
     def process(self):
         f = open(self.babelfilepath)
         for line in f:
-            m = re.search('msgid "(.*)"', line)
+            m = re.search('msgid "(.*?)"', line)
             if m:
                 msgid = m.group(1)
                 for line in f:
-                    m = re.search('msgstr "(.*)"', line)
+                    m = re.search('msgstr "(.*?)"', line)
                     if m:
                         msgstr = m.group(1)
                         if msgstr == "":
@@ -33,7 +42,7 @@ class GoogleTranslator():
                         print 'msgid "%s"' % (msgid)
                         ret_msgstr = ""
                         for item in  msgid.split("\n"):
-                            ret_msgstr += self.translate(item)
+                            ret_msgstr += self._translate(item)
                         print 'msgstr "%s"' % (ret_msgstr)
                         break
                     else:
