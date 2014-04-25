@@ -15,15 +15,18 @@ class GoogleTranslator():
         self.babelfilepath = babelfilepath
         self.to_lang = to_lang
         
-
     def process2(self):
         f = open(self.babelfilepath)
+        content = ""
         for line in f:
-            allfile += line
-
-        m = re.search('msgid "(.*?)"\n*msgstr "(.*?)"', line)
-        if m:
-
+            content += line
+        it1 = tuple(re.finditer(r"msgid \"(.+)\"", content))
+        it2 = tuple(re.finditer(r"msgid \"\"\n\"(.+\"\n\".+)\"", content))
+        # return the entire match of each match
+        for match in it1+it2:
+            item = match.group(1).replace("\"","")
+            print "[%d-%d] - MSGID: %s" % (match.start(), match.end(), item)
+            print "MSGSTR: %s" % (self.translate(item))
 
     def process(self):
         f = open(self.babelfilepath)
@@ -42,7 +45,7 @@ class GoogleTranslator():
                         print 'msgid "%s"' % (msgid)
                         ret_msgstr = ""
                         for item in  msgid.split("\n"):
-                            ret_msgstr += self._translate(item)
+                            ret_msgstr += self.translate(item)
                         print 'msgstr "%s"' % (ret_msgstr)
                         break
                     else:
@@ -60,6 +63,7 @@ class GoogleTranslator():
         text = text.replace('"','')
         text = browser.open(self.url % (from_lang,self.to_lang,urllib.quote(text))).read().decode('UTF-8')
         m = re.search('^\[\[\["(.*?)",.*',text)
+        browser.close()
         return m.group(1)
 
 
@@ -70,4 +74,4 @@ class GoogleTranslator():
 
 
 b = GoogleTranslator(sys.argv[1], sys.argv[2])
-b.process()
+b.process2()
