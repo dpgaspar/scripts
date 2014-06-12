@@ -30,6 +30,14 @@ def sum_sequence(n):
         sum += i
     return sum
 
+def sum_digits(n):
+    s = 0
+    while n:
+        s += n % 10
+        n /= 10
+    return s
+
+
 def fib(n, max=None):
     """
        Fibonnacci
@@ -120,6 +128,10 @@ def p10(n):
        else:
            return sum
 
+def p16(n):
+    n = pow(2,n)
+    return sum_digits(n)
+
 
 print(p1(999))
 print(p2(4000000))
@@ -129,3 +141,5 @@ print(p6(100))
 print(p7(10001))
 
 print(p10(2000000))
+print(p16(1000))
+
